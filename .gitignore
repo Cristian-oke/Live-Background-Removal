@@ -1,0 +1,15 @@
+dataset/
+../dataset/
+dist/
+../dist/
+# mediul virtual
+.venv/
+venv/
+env/
+build/
+../buid/
+# librariile si fisierele de sistem
+__pycache__/
+*.pth
+.idea/
+.vscode/
