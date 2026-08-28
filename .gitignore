@@ -10,6 +10,6 @@ build/
 ../buid/
 # librariile si fisierele de sistem
 __pycache__/
-*.pth
+
 .idea/
 .vscode/
