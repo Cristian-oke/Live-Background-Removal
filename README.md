@@ -104,13 +104,13 @@ Performanțele soluției au fost evaluate folosind următoarele metode de evalua
 Pe măsură ce numărul epocilor crește, loss-ul scade constant, semn că modelul învață să facă predicții tot mai precise. În același timp, IoU crește progresiv, indicând o îmbunătățire clară a calității segmentării realizate de model.
 </p></td></tr></table><br>
 
-<h3>Rezultate</h3>
+<h2>Rezultate</h2>
 <br>
 
 | Imagine originală | Mască binară | Final |
 |:---:|:---:|:---:|
-| <img src="resources/original.png" width="200"> | <img src="resources/masca.png" width="200"> | <img src="resources/final.png" width="200"> |
+| <img src="resources/original.png" width="300"> | <img src="resources/masca.png" width="300"> | <img src="resources/final.png" width="300"> |
 | <br> | <br> | <br> |
-| <img src="resources/original_2.png" width="200"> | <img src="resources/masca_2.png" width="200"> | <img src="resources/final_2.png" width="200"> |
+| <img src="resources/original_2.png" width="300"> | <img src="resources/masca_2.png" width="300"> | <img src="resources/final_2.png" width="300"> |
 
 
