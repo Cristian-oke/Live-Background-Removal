@@ -66,7 +66,9 @@
     - 2.667 imagini + 2.667 măști binare
   * Dataset human - Hugging Face (Schirrmacher)
     - 10.144 imagini + 10.144 măști binare
-<h3>Exemple</h3>
+  <br>    
+  &emsp;&emsp;Pentru a obține un set de antrenare mai mare am folosit tehnici de augmentare a datelor: rotire orizontală a imaginilor și măștii corespunzătoare plus rotații geometrice cu valori între -15 și 15 grade
+<h3>Exemple:</h3>
 
 | Imagine originală | Mască binară |
 |:---:|:---:|
@@ -75,3 +77,31 @@
 | <img src="resources/set_antrenare_original_2.png" width="350"> | <img src="resources/set_antrenare_binar_2.png" width="350"> |
 | <br> | <br> |
 | <img src="resources/set_antrenare_original_3.png" width="350"> | <img src="resources/set_antrenare_binar_3.png" width="350"> |
+
+<br>
+<h2>Metode de evaluare și metrici</h2>
+
+Performanțele soluției au fost evaluate folosind următoarele metrici și metode de evaluare:
+
+* **Dice + BCE Loss:** reprezintă funcția de pierdere hibridă utilizată pentru a minimiza eroarea în timpul antrenării, combinând acuratețea la nivel de pixel (BCE) cu optimizarea formei obiectului segmentat (Dice).
+* **Intersection over Union (IoU):** este principala metrică de precizie care măsoară gradul de suprapunere între masca prezisă de model și masca reală.
+
+<br>
+
+Performanțele soluției au fost evaluate folosind următoarele metode de evaluare:
+
+* La finalul fiecărei epoci, modelul a fost evaluat pe un set de validare (un grup de imagini separat de cel de antrenare) pentru a măsura progresul real.
+* Validarea finală a fost efectuată prin metoda Hold-out utilizând un set de test de 10% complet izolat de procesul de învățare.
+
+<br>
+<h3>Evoluția Loss și IoU pe epoci</h3>
+<br>
+
+<table><tr><td>
+<img src="resources/graf_evolutie_Loss_IoU_pe_epoci.png" width="2200" height="1100">
+</td>
+<td><p>
+Pe măsură ce numărul epocilor crește, loss-ul scade constant, semn că modelul învață să facă predicții tot mai precise. În același timp, IoU crește progresiv, indicând o îmbunătățire clară a calității segmentării realizate de model.
+</p></td></tr></table>
+
+
