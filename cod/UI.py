@@ -22,7 +22,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 MODEL_PATH = resource_path("best_model.pth")
 DEFAULT_BG = resource_path("background.jpg")
 
-# Incarcare model
+# incarcare model
 model = SimpleUNet().to(DEVICE)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True))
 model.eval()
@@ -57,7 +57,8 @@ running = True
 
 def update_frame():
     global bg_image
-    if not running: return
+    if not running:
+        return
 
     try:
         ret, frame = cap.read()
@@ -69,24 +70,20 @@ def update_frame():
         current_threshold = threshold_var.get()
         current_mode = view_mode.get()
 
-        # Procesare AI (doar daca nu suntem pe Original)
+        # procesare AI (doar daca nu suntem pe Original)
         if current_mode != "Original":
             with torch.no_grad():
                 input_tensor = ld.preprocess_frame(frame).to(DEVICE)
                 mask_out = model(input_tensor)
 
-            mask = ld.postprocess_mask(
-                mask_out,
-                threshold=current_threshold,
-                use_largest=largest_comp_var.get()
-            )
+            mask = ld.postprocess_mask(mask_out,threshold=current_threshold,use_largest=largest_comp_var.get())
 
-        # Logica de vizualizare
+        # logica de vizualizare
         if current_mode == "Final":
             output = frame * mask + bg_image * (1 - mask)
         elif current_mode == "Mască":
             output = (mask * 255).astype(np.uint8)
-        else:  # Original
+        else:
             output = frame
 
         output = np.clip(output, 0, 255).astype(np.uint8)
@@ -98,7 +95,6 @@ def update_frame():
 
     except Exception as e:
         print(f"Eroare Frame: {e}")
-
     finally:
         root.after(10, update_frame)
 
@@ -116,26 +112,21 @@ def stop():
     root.destroy()
 
 
-# --- CONTROALE ---
+# controale
 controls_frame = ctk.CTkFrame(root)
 controls_frame.pack(side="bottom", fill="x", padx=10, pady=10)
-
 btn_bg = ctk.CTkButton(controls_frame, text="Schimbă background", command=change_background)
 btn_bg.pack(side="left", padx=5)
-
 mode_switch = ctk.CTkSegmentedButton(controls_frame, values=["Original", "Mască", "Final"], variable=view_mode)
 mode_switch.pack(side="left", padx=10)
 
-# Switch-ul nou pentru Largest Component
+# switch pentru Largest Component
 sw_largest = ctk.CTkSwitch(controls_frame, text="Clean Mask", variable=largest_comp_var)
 sw_largest.pack(side="left", padx=10)
-
 lbl_threshold = ctk.CTkLabel(controls_frame, text="Threshold:")
 lbl_threshold.pack(side="left", padx=5)
-
 scale_threshold = ctk.CTkSlider(controls_frame, from_=0.0, to=1.0, variable=threshold_var, width=150)
 scale_threshold.pack(side="left", padx=5)
-
 btn_exit = ctk.CTkButton(controls_frame, text="Iesire", fg_color="red", command=stop)
 btn_exit.pack(side="right", padx=5)
 
